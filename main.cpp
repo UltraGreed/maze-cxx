@@ -1,6 +1,10 @@
 #include <iostream>
+#include "generateMaze.h"
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+int main(){
+    int xLength, yLength;
+    std::cin >> xLength >> yLength;
+    generateMaze(xLength, yLength);
+
     return 0;
 }

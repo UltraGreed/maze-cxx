@@ -3,4 +3,4 @@ project(theBestLabyrinth)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(theBestLabyrinth main.cpp)
+add_executable(theBestLabyrinth generateMaze.h main.cpp)
