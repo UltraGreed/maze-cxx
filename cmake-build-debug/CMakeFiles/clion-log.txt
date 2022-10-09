@@ -1,4 +1,4 @@
-/home/ultragreed/Applications/CLion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/ultragreed/Applications/CLion/bin/ninja/linux/ninja -G Ninja -S /home/ultragreed/CLionProjects/theBestLabyrinth -B /home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/ultragreed/CLionProjects/theBestLabyrinth -B /home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug
