@@ -1,5 +1,8 @@
 # ninja log v5
-775	852	1664901658042883423	theBestLabyrinth	ba67a5c4825b8cfe
-1	775	1664901657965884391	CMakeFiles/theBestLabyrinth.dir/main.cpp.o	9d52b0e371c92737
-0	618	1664902668090185409	CMakeFiles/theBestLabyrinth.dir/main.cpp.o	9d52b0e371c92737
+2	805	1665758801799167504	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Camera.cpp.o	1a50c3db5682c4f6
 619	693	1664902668165184466	theBestLabyrinth	ba67a5c4825b8cfe
+2	759	1665758801753167503	CMakeFiles/theBestLabyrinth.dir/main.cpp.o	9d52b0e371c92737
+3	421	1665758801415167497	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Player.cpp.o	195f0f265ff927bd
+3	886	1665758801881167505	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Maze.cpp.o	fec300e340d4b3cd
+3	800	1665758801795167504	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
+1	122	1665759110218172477	theBestLabyrinth	9c3d2a2d1f42ebe5

@@ -1,7 +1,7 @@
 set(CMAKE_CXX_COMPILER "/usr/bin/c++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
-set(CMAKE_CXX_COMPILER_VERSION "12.2.0")
+set(CMAKE_CXX_COMPILER_VERSION "11.3.0")
 set(CMAKE_CXX_COMPILER_VERSION_INTERNAL "")
 set(CMAKE_CXX_COMPILER_WRAPPER "")
 set(CMAKE_CXX_STANDARD_COMPUTED_DEFAULT "17")
@@ -77,7 +77,7 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include/g++-v12;/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include/g++-v12/x86_64-pc-linux-gnu;/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include/g++-v12/backward;/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include;/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed;/usr/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/usr/lib/gcc/x86_64-pc-linux-gnu/11.3.0/include/g++-v11;/usr/lib/gcc/x86_64-pc-linux-gnu/11.3.0/include/g++-v11/x86_64-pc-linux-gnu;/usr/lib/gcc/x86_64-pc-linux-gnu/11.3.0/include/g++-v11/backward;/usr/lib/gcc/x86_64-pc-linux-gnu/11.3.0/include;/usr/lib/gcc/x86_64-pc-linux-gnu/11.3.0/include-fixed;/usr/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0;/usr/lib64;/lib64;/usr/x86_64-pc-linux-gnu/lib;/usr/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-pc-linux-gnu/11.3.0;/usr/lib64;/lib64;/usr/x86_64-pc-linux-gnu/lib;/usr/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
