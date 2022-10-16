@@ -2,18 +2,22 @@
 // Created by ultragreed on 10/14/22.
 //
 #include <fstream>
-#include "Maze.h"
 #include <vector>
 #include <random>
 
-Maze::Maze(int mazeWidth, int mazeHeight) {
+#include "Maze.h"
+
+Maze::Maze(int mazeWidth, const int mazeHeight) {
     _gen = new std::mt19937(_rd());
     _quadrupleDist = new std::uniform_int_distribution<int>(0, 3);
-    _walls = GenerateMaze(mazeWidth, mazeHeight);
+    _maze = new int *[mazeHeight];
+    for (int i = 0; i < mazeHeight; i++) _maze[i] = new int[mazeWidth];
+
+    GenerateMaze(mazeWidth, mazeHeight);
 }
 
-std::vector<std::vector<int>> Maze::GetWalls() {
-    return _walls;
+int **Maze::GetWalls() {
+    return _maze;
 }
 
 std::vector<std::vector<int>>
@@ -156,52 +160,42 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
 }
 
 
-std::vector<std::vector<int>>
-Maze::GenerateMaze(int xLength, int yLength) {
+void Maze::GenerateMaze(int xLength, int yLength) {
     // initial empty maze generation
-    char maze[yLength][xLength];
-    for (int x = 0; x < xLength; x++)
-        for (int y = 0; y < yLength; y++)
-            maze[x][y] = (!x || !y || x == xLength - 1 || y == yLength - 1) ? '#' : ' ';
+    for (int y = 0; y < yLength; y++)
+        for (int x = 0; x < xLength; x++)
+            _maze[y][x] = (!x || !y || x == xLength - 1 || y == yLength - 1);
 
-    // maze _walls generation
+    // _maze _walls generation
     auto mazeWalls = GenerateChamber(1, 1, xLength - 2, yLength - 2, {});
 
-    // filling maze with previously Generated _walls
+    // filling _maze with previously Generated _walls
     for (std::vector<int> &wall: mazeWalls) {
         int x = wall.at(0);
         int y = wall.at(1);
-        maze[x][y] = '#';
+        _maze[y][x] = 1;
     }
 
-    // generating random entry and exit points
+    // generating random entry and exit dist
     std::uniform_int_distribution<int> xEntryDist(1, xLength - 2);
-    std::vector<int> entryPoint = {xEntryDist(*_gen), 0};
-    while (maze[1][entryPoint.at(0)] == '#')
-        entryPoint = {xEntryDist(*_gen), 0};
-    maze[0][entryPoint.at(0)] = ' ';
-    std::vector<int> exitPoint = {xEntryDist(*_gen), yLength - 1};
-    while (maze[yLength - 2][exitPoint.at(0)] == '#')
-        exitPoint = {xEntryDist(*_gen), yLength - 1};
-    maze[yLength - 1][exitPoint.at(0)] = ' ';
-
-    for (int x = 0; x < xLength; x++)
-        for (int y = 0; y < yLength; y++)
-            if ((!x || !y || x == xLength - 1 || y == yLength - 1) &&
-                std::vector<int>{x, y} != entryPoint &&
-                std::vector<int>{x, y} != exitPoint
-                    ) {
-                mazeWalls.push_back(std::vector<int>{x, y});
-            }
+    // generating entry point
+    int entryPoint = xEntryDist(*_gen);
+    while (_maze[1][entryPoint])
+        entryPoint = xEntryDist(*_gen);
+    _maze[0][entryPoint] = 0;
+    // generating exit point
+    int exitPoint = xEntryDist(*_gen);
+    while (_maze[yLength - 2][exitPoint])
+        exitPoint = xEntryDist(*_gen);
+    _maze[yLength - 1][exitPoint] = 0;
 
     // writing result into a file
     std::ofstream output("output.txt");
-    for (int x = 0; x < xLength; x++) {
-        for (int y = 0; y < yLength; y++) {
-            output << maze[x][y] << ' ';
+    for (int y = 0; y < yLength; y++) {
+        for (int x = 0; x < xLength; x++) {
+            output << (_maze[y][x] ? '#' : ' ') << ' ';
         }
         output << '\n';
     }
-    return mazeWalls;
 }
 

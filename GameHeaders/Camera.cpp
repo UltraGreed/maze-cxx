@@ -3,21 +3,30 @@
 //
 
 #include <cmath>
-#include <vector>
 #include <SFML/Graphics.hpp>
+
 #include "Camera.h"
 
-Camera::Camera(int screenWidth, int screenHeight, const std::vector<std::vector<int>> &mazeWalls) {
+Camera::Camera(int screenWidth, int screenHeight, int **maze, int mazeWidth, int mazeHeight,
+               double cameraHeightMultiplier, double fieldOfView, double cameraStep, double maxRange,
+               double brightness) {
     _screenWidth = screenWidth;
     _screenHeight = screenHeight;
-    _mazeWalls = mazeWalls;
+    _maze = maze;
+    _mazeWidth = mazeWidth;
+    _mazeHeight = mazeHeight;
+    _heightMultiplier = cameraHeightMultiplier;
+    _fieldOfView = fieldOfView;
+    _rayStep = cameraStep;
+    _maxRange = maxRange;
+    _brightness = brightness;
 }
 
 void Camera::Draw(double playerX, double playerY, double playerAng, sf::RenderWindow &window) {
     for (int screenX = 0; screenX < _screenWidth; screenX++) {
         double stepAng = _fieldOfView / _screenWidth;
         double angle = playerAng - _fieldOfView / 2 + screenX * stepAng;
-        double distance = RayCast(playerX, playerY, angle);
+        double distance = RayCast(playerX + 0.5, playerY + 0.5, angle);
         sf::Vertex line[] =
                 {
                         sf::Vertex(sf::Vector2f(
@@ -27,17 +36,10 @@ void Camera::Draw(double playerX, double playerY, double playerAng, sf::RenderWi
                                 screenX, 0.5 * _screenHeight * (1 + _heightMultiplier / distance))
                         ),
                 };
-        sf::Color wallColor = sf::Color(255, 255, 255);
-        if (distance < _maxRange / 10) {
-            wallColor = sf::Color(255, 255, 255);
-        } else if (distance < _maxRange / 5) {
-            wallColor = sf::Color(245, 245, 245);
-        } else if (distance < _maxRange / 2) {
-            wallColor = sf::Color(235, 235, 235);
-        } else {
-            wallColor = sf::Color(225, 225, 225);
-        }
-        //printf("%f",  _screenHeight * _heightMultiplier / distance);
+
+        int rgb = 255 * (1 - distance / _maxRange) * _brightness;
+        sf::Color wallColor = sf::Color(rgb, rgb, rgb);
+
         line[0].color = wallColor;
         line[1].color = wallColor;
 
@@ -51,14 +53,12 @@ double Camera::RayCast(double startX, double startY, double angle) {
     bool isHitWall = false;
     double x = startX;
     double y = startY;
-    while (wallDistance < _maxRange && !isHitWall) {
-        x += _step * cos(angle);
-        y += _step * sin(angle);
+    while (!isHitWall && wallDistance < _maxRange) {
+        x += _rayStep * cos(angle);
+        y += _rayStep * sin(angle);
         wallDistance = sqrt(pow(startX - x, 2) + pow(startY - y, 2));
-        for (std::vector<int> &wall: _mazeWalls) {
-            if (wall.at(1) == (int) round(y) && wall.at(0) == (int) round(x)) {
-                isHitWall = true;
-            }
+        if (y >= 0 && y < _mazeHeight && x >= 0 && x < _mazeWidth && _maze[(int) y][(int) x]) {
+            isHitWall = true;
         }
     }
     if (isHitWall)

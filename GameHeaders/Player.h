@@ -3,13 +3,15 @@
 //
 
 #pragma once
+
 #include <queue>
 #include <cmath>
 
 
 class Player {
 public:
-    Player(double speed, double speedAng);
+    Player(double speed, double speedAng, int **maze, int mazeWidth, int mazeHeight, double playerX, double playerY,
+           double playerAngle);
 
     void PutMoveInQueue(char direction);
 
@@ -25,9 +27,10 @@ public:
 
 private :
     double _speed, _speedAng; // distance per second
-    double _x = 8;
-    double _y = 16;
-    double _angle = asin(-1);
+    int _mazeWidth, _mazeHeight;
+    int **_maze;
+    double _x, _y;
+    double _angle;
     double _progress = 0;
     char _state = ' '; // ' ' - idle
     // move: w - forward, e - right, s - back, q - left

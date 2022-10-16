@@ -27,16 +27,16 @@ class Maze {
 public:
     Maze(int mazeWidth, int mazeHeight);
 
-    std::vector<std::vector<int>> GetWalls();
+    int **GetWalls();
 
 private:
     std::random_device _rd;
     std::mt19937 *_gen;
     std::uniform_int_distribution<int> *_quadrupleDist;
-    std::vector<std::vector<int>> _walls;
+    int **_maze;
 
     std::vector<std::vector<int>>
     GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<std::vector<int>> prevSpaces);
 
-    std::vector<std::vector<int>> GenerateMaze(int xLength, int yLength);
+    void GenerateMaze(int xLength, int yLength);
 };

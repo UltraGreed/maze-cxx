@@ -1,8 +1,19 @@
 # ninja log v5
-2	805	1665758801799167504	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Camera.cpp.o	1a50c3db5682c4f6
-619	693	1664902668165184466	theBestLabyrinth	ba67a5c4825b8cfe
-2	759	1665758801753167503	CMakeFiles/theBestLabyrinth.dir/main.cpp.o	9d52b0e371c92737
-3	421	1665758801415167497	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Player.cpp.o	195f0f265ff927bd
-3	886	1665758801881167505	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Maze.cpp.o	fec300e340d4b3cd
-3	800	1665758801795167504	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
-1	122	1665759110218172477	theBestLabyrinth	9c3d2a2d1f42ebe5
+1	454	1665940095681878049	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Camera.cpp.o	1a50c3db5682c4f6
+454	563	1665940095789878049	theBestLabyrinth	9c3d2a2d1f42ebe5
+1	547	1665938882768884159	CMakeFiles/theBestLabyrinth.dir/main.cpp.o	9d52b0e371c92737
+1	370	1665938000419888604	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Player.cpp.o	195f0f265ff927bd
+1	917	1665938000965888601	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Maze.cpp.o	fec300e340d4b3cd
+0	531	1665939662633880231	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
+1	519	1665940373476876650	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Camera.cpp.o	1a50c3db5682c4f6
+1	552	1665940373509876650	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
+1	571	1665940373528876649	CMakeFiles/theBestLabyrinth.dir/main.cpp.o	9d52b0e371c92737
+571	662	1665940373618876649	theBestLabyrinth	9c3d2a2d1f42ebe5
+1	640	1665940428948876370	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
+640	749	1665940429056876370	theBestLabyrinth	9c3d2a2d1f42ebe5
+0	617	1665940446502876282	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
+617	719	1665940446603876281	theBestLabyrinth	9c3d2a2d1f42ebe5
+1	597	1665940462027876204	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
+597	694	1665940462123876203	theBestLabyrinth	9c3d2a2d1f42ebe5
+1	644	1665940518321875920	CMakeFiles/theBestLabyrinth.dir/GameHeaders/Gamestate.cpp.o	c56ec395a15d2ce0
+644	754	1665940518430875920	theBestLabyrinth	9c3d2a2d1f42ebe5

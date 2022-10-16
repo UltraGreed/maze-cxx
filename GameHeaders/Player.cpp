@@ -4,11 +4,19 @@
 
 #include <cmath>
 #include <string>
+
 #include "Player.h"
 
-Player::Player(double speed, double speedAng) {
+Player::Player(double speed, double speedAng, int **maze, int mazeWidth, int mazeHeight, double playerX, double playerY,
+               double playerAngle) {
     _speed = speed;
     _speedAng = speedAng;
+    _mazeHeight = mazeHeight;
+    _mazeWidth = mazeWidth;
+    _maze = maze;
+    _x = playerX;
+    _y = playerY;
+    _angle = playerAngle;
 }
 
 void Player::PutMoveInQueue(char direction) {
@@ -37,6 +45,15 @@ double Player::GetAngle() const { return _angle; }
 
 void Player::Debug() const {
     printf("_x: %f, _y: %f\n_state: %c\n_angle: %f\n_progress: %f\n", _x, _y, _state, _angle, _progress);
+    for (int y = 0; y < _mazeHeight; y++) {
+        for (int x = 0; x < _mazeWidth; x++)
+            if (_x == x && _y == y)
+                printf("_");
+            else
+                printf("%d", _maze[y][x]);
+        printf("\n");
+    }
+    printf("\nDone");
 }
 
 

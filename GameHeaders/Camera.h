@@ -3,20 +3,23 @@
 //
 
 #pragma once
-#include <vector>
+
 #include <SFML/Graphics.hpp>
 
 class Camera {
 public:
-    Camera(int screenWidth, int screenHeight, const std::vector<std::vector<int>> &mazeWalls);
+    Camera(int screenWidth, int screenHeight, int **maze, int mazeWidth, int mazeHeight, double cameraHeightMultiplier,
+           double fieldOfView, double cameraStep, double maxRange, double brightness);
+
     void Draw(double playerX, double playerY, double playerAng, sf::RenderWindow &window);
+
 private:
-    std::vector<std::vector<int>> _mazeWalls;
+    int **_maze;
     int _screenHeight, _screenWidth;
-    double _heightMultiplier = 1;
-    double _fieldOfView = acos(-1) / 3;
-    double _step = 0.05;
-    double _maxRange = 5;
+    int _mazeHeight, _mazeWidth;
+    double _heightMultiplier, _fieldOfView;
+    double _rayStep, _maxRange;
+    double _brightness;
 
     double RayCast(double startX, double startY, double angle);
 };

@@ -11,11 +11,10 @@
 
 class GameState {
 public:
-    GameState(sf::RenderWindow &window) ;
+    GameState() ;
 
-    void Update() ;
+    bool Update() ;
 
-    void HandleInput(char input) ;
 
 private:
     sf::Clock _clock;
@@ -23,5 +22,9 @@ private:
     Camera *_camera;
     Maze *_maze;
     sf::RenderWindow *_window;
+
+    void HandleInput(char input) ;
+
+    bool HandleEvents();
 };
 
