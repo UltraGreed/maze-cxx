@@ -22,6 +22,7 @@ GameState::GameState() {
                                    sf::Style::Default
     );
     _window->setKeyRepeatEnabled(false);
+    _window->setVerticalSyncEnabled(true); // call it once, after creating the window;
 }
 
 bool GameState::Update() {

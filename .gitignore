@@ -32,4 +32,7 @@
 *.app
 
 # Additional
-output.txt
+cmake-build-debug
+
+# why isn't it included by default??
+.idea

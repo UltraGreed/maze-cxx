@@ -1,3 +1,0 @@
-/home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug/CMakeFiles/theBestLabyrinth.dir
-/home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug/CMakeFiles/rebuild_cache.dir

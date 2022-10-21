@@ -86,8 +86,11 @@ double Camera::RayCast(double startX, double startY, double angle) {
         int cellY = int(y) - ((y == int(y) && sinA < 0 || y < 0) ? 1 : 0);
 
         // check if the cell is inside maze and contains a wall
-        if (cellY >= 0 && cellY < _mazeHeight && cellX >= 0 && cellX < _mazeWidth && _mazeMap[cellY][cellX])
-            isHitWall = true;
+        if (cellY >= 0 && cellY < _mazeHeight && cellX >= 0 && cellX < _mazeWidth) {
+            int cellValue = _mazeMap[cellY][cellX];
+            if (cellValue == INNER_WALL || cellValue == OUTER_WALL)
+                isHitWall = true;
+        }
     }
 
     if (isHitWall) {

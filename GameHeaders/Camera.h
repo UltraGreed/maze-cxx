@@ -21,5 +21,10 @@ private:
     double _maxRange;
     double _brightness;
 
+    const int RAW = 0;
+    const int SPACE = 1;
+    const int INNER_WALL = 2;
+    const int OUTER_WALL = 3;
+
     double RayCast(double startX, double startY, double angle);
 };
