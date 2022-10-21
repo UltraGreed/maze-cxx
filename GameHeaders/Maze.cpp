@@ -10,14 +10,19 @@
 Maze::Maze(int mazeWidth, const int mazeHeight) {
     _gen = new std::mt19937(_rd());
     _quadrupleDist = new std::uniform_int_distribution<int>(0, 3);
-    _maze = new int *[mazeHeight];
-    for (int i = 0; i < mazeHeight; i++) _maze[i] = new int[mazeWidth];
+    _mazeMap = new int *[mazeHeight];
+    for (int i = 0; i < mazeHeight; i++) _mazeMap[i] = new int[mazeWidth];
 
     GenerateMaze(mazeWidth, mazeHeight);
 }
 
-int **Maze::GetWalls() {
-    return _maze;
+int **Maze::GetMazeMap() {
+    return _mazeMap;
+}
+
+int Maze::GetRandomIntFromRange(int rangeStart, int rangeEnd) {
+    std::uniform_int_distribution<int> ySpaceDist(rangeStart, rangeEnd);
+    return ySpaceDist(*_gen);
 }
 
 std::vector<std::vector<int>>
@@ -46,32 +51,46 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
         isHorizontalSplit = true;
         ySplit = ySplitDist(*_gen);
         xSplit = xSplitDist(*_gen);
+
         // create a space in every wall but one
         int choice = (*_quadrupleDist)(*_gen);
+
+        // top wall space
         if (choice != 0) {
-            // top wall space
-            std::uniform_int_distribution<int> ySpaceDist(yStart, ySplit - 1);
-            thisSpaces.push_back({xSplit, ySpaceDist(*_gen)});
+            int spaceX = xSplit;
+            int spaceY = GetRandomIntFromRange(yStart, ySplit - 1);
+            std::vector<int> spaceCoordinates = {spaceX, spaceY};
+            thisSpaces.push_back(spaceCoordinates);
         }
+
+        // right wall space
         if (choice != 1) {
-            // right wall space
-            std::uniform_int_distribution<int> xSpaceDist(xSplit + 1, xEnd);
-            thisSpaces.push_back({xSpaceDist(*_gen), ySplit});
+            int spaceX = GetRandomIntFromRange(xSplit + 1, xEnd);
+            int spaceY = ySplit;
+            std::vector<int> spaceCoordinates = {spaceX, spaceY};
+            thisSpaces.push_back(spaceCoordinates);
         }
+
+        // bottom wall space
         if (choice != 2) {
-            // bottom wall space
-            std::uniform_int_distribution<int> ySpaceDist(ySplit + 1, yEnd);
-            thisSpaces.push_back({xSplit, ySpaceDist(*_gen)});
+            int spaceX = xSplit;
+            int spaceY = GetRandomIntFromRange(ySplit + 1, yEnd);
+            std::vector<int> spaceCoordinates = {spaceX, spaceY};
+            thisSpaces.push_back(spaceCoordinates);
         }
+
+        // left wall space
         if (choice != 3) {
-            // left wall space
-            std::uniform_int_distribution<int> xSpaceDist(xStart, xSplit - 1);
-            thisSpaces.push_back({xSpaceDist(*_gen), ySplit});
+            int spaceX = GetRandomIntFromRange(xStart, xSplit - 1);
+            int spaceY = ySplit;
+            std::vector<int> spaceCoordinates = {spaceX, spaceY};
+            thisSpaces.push_back(spaceCoordinates);
         }
     } else if (yEnd - yStart >= 2) {
         // case we build only a horizontal wall
         isHorizontalSplit = true;
         ySplit = ySplitDist(*_gen);
+
         // randomize wall space
         std::uniform_int_distribution<int> xSpaceDist(xStart, xEnd);
         thisSpaces.push_back(std::vector<int>{xSpaceDist(*_gen), ySplit});
@@ -79,6 +98,7 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
         // case we build only a vertical wall
         isVerticalSplit = true;
         xSplit = xSplitDist(*_gen);
+
         // randomize wall space
         std::uniform_int_distribution<int> ySpaceDist(yStart, yEnd);
         thisSpaces.push_back(std::vector<int>{xSplit, ySpaceDist(*_gen)});
@@ -87,15 +107,17 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
     // this chamber horizontal _walls generation
     if (isHorizontalSplit) {
         for (int i = xStart; i < xEnd + 1; i++) {
+            std::vector<int>wallCoordinates = {i, ySplit};
             // check if here should be left a space
             bool isSpace = false;
             for (std::vector<int> &space: thisSpaces) {
-                if (space == std::vector<int>{i, ySplit}) {
+                if (space == wallCoordinates) {
                     isSpace = true;
                     break;
                 }
             }
             if (isSpace) continue;
+
             // check if wall would be an obstacle for another wall's door
             bool isObstacle = false;
             for (std::vector<int> &space: prevSpaces) {
@@ -105,7 +127,8 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
                 }
             }
             if (isObstacle) continue;
-            thisWalls.push_back(std::vector<int>{i, ySplit});
+
+            thisWalls.push_back(wallCoordinates);
         }
     }
 
@@ -121,6 +144,7 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
                 }
             }
             if (isSpace) continue;
+
             // check if wall would be an obstacle for another wall's door
             bool isObstacle = false;
             for (std::vector<int> &thisSpace: prevSpaces) {
@@ -130,6 +154,7 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
                 }
             }
             if (isObstacle) continue;
+
             thisWalls.push_back(std::vector<int>{xSplit, i});
         }
     }
@@ -139,23 +164,29 @@ Maze::GenerateChamber(int xStart, int yStart, int xEnd, int yEnd, std::vector<st
     if (isVerticalSplit && isHorizontalSplit) {
         // top-left chamber
         nextWalls += GenerateChamber(xStart, yStart, xSplit - 1, ySplit - 1, prevSpaces);
+
         // top-right chamber
         nextWalls += GenerateChamber(xSplit + 1, yStart, xEnd, ySplit - 1, prevSpaces);
+
         // bottom-right chamber
         nextWalls += GenerateChamber(xSplit + 1, ySplit + 1, xEnd, yEnd, prevSpaces);
+
         // top-right chamber
         nextWalls += GenerateChamber(xStart, ySplit + 1, xSplit - 1, yEnd, prevSpaces);
     } else if (isVerticalSplit) {
         // left chamber
         nextWalls += GenerateChamber(xStart, yStart, xSplit - 1, yEnd, prevSpaces);
+
         // right chamber
         nextWalls += GenerateChamber(xSplit + 1, yStart, xEnd, yEnd, prevSpaces);
     } else {
         // top chamber
         nextWalls += GenerateChamber(xStart, yStart, xEnd, ySplit - 1, prevSpaces);
+
         // bottom chamber
         nextWalls += GenerateChamber(xStart, ySplit + 1, xEnd, yEnd, prevSpaces);
     }
+
     return nextWalls + thisWalls;
 }
 
@@ -164,36 +195,38 @@ void Maze::GenerateMaze(int xLength, int yLength) {
     // initial empty maze generation
     for (int y = 0; y < yLength; y++)
         for (int x = 0; x < xLength; x++)
-            _maze[y][x] = (!x || !y || x == xLength - 1 || y == yLength - 1);
+            _mazeMap[y][x] = (!x || !y || x == xLength - 1 || y == yLength - 1);
 
-    // _maze _walls generation
+    // _mazeMap _walls generation
     auto mazeWalls = GenerateChamber(1, 1, xLength - 2, yLength - 2, {});
 
-    // filling _maze with previously Generated _walls
+    // filling _mazeMap with previously Generated _walls
     for (std::vector<int> &wall: mazeWalls) {
         int x = wall.at(0);
         int y = wall.at(1);
-        _maze[y][x] = 1;
+        _mazeMap[y][x] = 1;
     }
 
     // generating random entry and exit dist
     std::uniform_int_distribution<int> xEntryDist(1, xLength - 2);
+
     // generating entry point
     int entryPoint = xEntryDist(*_gen);
-    while (_maze[1][entryPoint])
+    while (_mazeMap[1][entryPoint])
         entryPoint = xEntryDist(*_gen);
-    _maze[0][entryPoint] = 0;
+    _mazeMap[0][entryPoint] = 0;
+
     // generating exit point
     int exitPoint = xEntryDist(*_gen);
-    while (_maze[yLength - 2][exitPoint])
+    while (_mazeMap[yLength - 2][exitPoint])
         exitPoint = xEntryDist(*_gen);
-    _maze[yLength - 1][exitPoint] = 0;
+    _mazeMap[yLength - 1][exitPoint] = 0;
 
     // writing result into a file
-    std::ofstream output("output.txt");
+    std::ofstream output("mazemap.txt");
     for (int y = 0; y < yLength; y++) {
         for (int x = 0; x < xLength; x++) {
-            output << (_maze[y][x] ? '#' : ' ') << ' ';
+            output << (_mazeMap[y][x] ? '#' : ' ') << ' ';
         }
         output << '\n';
     }

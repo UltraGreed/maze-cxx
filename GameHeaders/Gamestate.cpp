@@ -11,10 +11,10 @@
 
 GameState::GameState() {
     _maze = new Maze(config::mazeWidth, config::mazeHeight);
-    _player = new Player(config::playerSpeed, config::playerAngularSpeed, _maze->GetWalls(), config::mazeWidth,
+    _player = new Player(config::playerSpeed, config::playerAngularSpeed, _maze->GetMazeMap(), config::mazeWidth,
                          config::mazeHeight, config::playerX, config::playerY, config::playerAngle);
-    _camera = new Camera(config::screenWidth, config::screenHeight, _maze->GetWalls(), config::mazeWidth,
-                         config::mazeHeight, config::cameraHeightMultiplier, config::fieldOfView, config::rayStep,
+    _camera = new Camera(config::screenWidth, config::screenHeight, _maze->GetMazeMap(), config::mazeWidth,
+                         config::mazeHeight, config::cameraHeightMultiplier, config::fieldOfView,
                          config::maxRange, config::brightness);
 
     _window = new sf::RenderWindow(sf::VideoMode(config::screenWidth, config::screenHeight),
@@ -31,7 +31,7 @@ bool GameState::Update() {
 
     _player->Update(deltaTime.asSeconds());
 
-    _window->clear(sf::Color(55, 55, 55));
+    _window->clear(sf::Color(config::bgRGB, config::bgRGB, config::bgRGB));
 
     _camera->Draw(_player->GetX(), _player->GetY(), _player->GetAngle(), *_window);
 
@@ -57,8 +57,8 @@ bool GameState::HandleEvents() {
         }
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Escape) {
-                return false;
                 _window->close();
+                return false;
             } else if (event.key.code == sf::Keyboard::W)
                 HandleInput('w'); // move forward
             else if (event.key.code == sf::Keyboard::D)

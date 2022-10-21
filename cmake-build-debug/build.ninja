@@ -101,7 +101,7 @@ build theBestLabyrinth: CXX_EXECUTABLE_LINKER__theBestLabyrinth_Debug CMakeFiles
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug && /usr/bin/cmake-gui -S/home/ultragreed/CLionProjects/theBestLabyrinth -B/home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug
+  COMMAND = cd /home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug && /home/ultragreed/Applications/CLion/bin/cmake/linux/bin/ccmake -S/home/ultragreed/CLionProjects/theBestLabyrinth -B/home/ultragreed/CLionProjects/theBestLabyrinth/cmake-build-debug
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
