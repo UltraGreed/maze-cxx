@@ -33,6 +33,7 @@
 
 # Additional
 cmake-build-debug
+build
 
 # why isn't it included by default??
 .idea
