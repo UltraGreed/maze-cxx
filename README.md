@@ -28,7 +28,7 @@ Then clone and compile project with CMake:
 
 Use WASD to walk, Q/E to rotate, ESC to exit.
 
-Configuration can be provided via GameHeaders/config.h file. Generated maze in saved as mazemap.txt
+Configuration can be provided via GameHeaders/config.h file. Generated maze is saved as mazemap.txt
 
 See also
 --------
